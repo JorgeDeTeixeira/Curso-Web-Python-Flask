@@ -41,3 +41,9 @@ def adicionarFilme():
 def listarFilmes():
     filmes = Filme.query.order_by(Filme.titulo.desc()).all()
     return render_template('listaFilmes.html', objects=filmes)
+
+
+@app.route('/filmes/<int:id>')
+def detalheFilme(id):
+    filme = Filme.query.get(id)
+    return render_template('detalheFilme.html', object=filme)

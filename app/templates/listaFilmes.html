@@ -18,6 +18,7 @@
             <tr>
                 <td>{{objeto.titulo}}</td>
                 <td>{{objeto.ano}}</td>
+                <td class="text-end"><a href="{{url_for('detalheFilme', id=objeto.id)}}" class="btn btn-secondary">Detalhes</a></td>
             </tr>
             {% endfor %}
         </tbody>
