@@ -1,7 +1,10 @@
-{% extends 'base.html' %}
-
-{% block content %}
-<img src="{{url_for('static', filename='img/logo.png')}}" alt="Logo do flask" width="1400px" height="550px">
+{% extends 'base.html' %} {% block content %}
+<img
+    src="{{url_for('static', filename='img/logo.png')}}"
+    alt="Logo do flask"
+    width="1400px"
+    height="550px"
+/>
 
 <h1>Bem vindo ao Primeiro Projeto Flask</h1>
 
@@ -9,5 +12,17 @@
 
 <p>Usuário: {{ context['usuario'] }}</p>
 <p>Idade: {{ context['idade'] }}</p>
+
+<p>Mensagem: <span id="msg_back"></span></p>
 {% include 'lista.html' %}
+
+<script>
+    const msg_back = document.getElementById("msg_back");
+    fetch("/api/dados")
+        .then((response) => response.json())
+        .then((data) => {
+            msg_back.innerHTML = data.mensagem;
+        });
+</script>
+
 {% endblock %}
