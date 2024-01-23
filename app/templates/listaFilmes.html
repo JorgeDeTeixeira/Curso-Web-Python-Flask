@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Lista de filmes</h1>
+
+<div class="row mt-4 border rounded shadow">
+    <table class="table">
+        <thead class="table-primary">
+            <tr>
+                <th>Título</th>
+                <th>Ano</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for objeto in objects %}
+            <tr>
+                <td>{{objeto.titulo}}</td>
+                <td>{{objeto.ano}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

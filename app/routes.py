@@ -1,6 +1,7 @@
 from flask import render_template, url_for, jsonify, redirect
 from app import app
 from app.forms import FilmeForm
+from app.models import Filme
 
 
 @app.route("/")
@@ -32,6 +33,11 @@ def adicionarFilme():
     form = FilmeForm()
     if form.validate_on_submit():
         form.save()
-        print('salvou')
         return redirect(url_for('homepage'))
     return render_template('adicionarFilme.html', form=form)
+
+
+@app.route('/filme/lista')
+def listarFilmes():
+    filmes = Filme.query.order_by(Filme.titulo.desc()).all()
+    return render_template('listaFilmes.html', objects=filmes)
