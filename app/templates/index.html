@@ -1,10 +1,13 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<img src="{{url_for('static', filename='img/logo.png')}}" alt="Logo do flask" width="1500px" height="550px">
+<img src="{{url_for('static', filename='img/logo.png')}}" alt="Logo do flask" width="1400px" height="550px">
 
 <h1>Bem vindo ao Primeiro Projeto Flask</h1>
 
 <p>Está é a página raiz do projeto</p>
+
+<p>Usuário: {{ context['usuario'] }}</p>
+<p>Idade: {{ context['idade'] }}</p>
 {% include 'lista.html' %}
 {% endblock %}
