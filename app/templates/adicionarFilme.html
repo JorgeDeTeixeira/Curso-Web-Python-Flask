@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<center>
+    <h1>Novo Filme</h1>
+    <hr><br>
+
+    <form method="post">
+        {{form.csrf_token}}
+
+        {{form.titulo.label}}
+        {{form.titulo}}
+
+        {{form.ano.label}}
+        {{form.ano}}
+
+        <br><br>
+
+        {{form.resumo.label()}}<br>
+        {{form.resumo(rows=10, cols=50)}}
+
+        <br><br>
+        {{form.submit()}}
+    </form>
+</center>
+
+{% endblock %}

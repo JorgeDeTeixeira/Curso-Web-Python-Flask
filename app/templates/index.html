@@ -13,10 +13,7 @@
 <p>Usuário: {{ context['usuario'] }}</p>
 <p>Idade: {{ context['idade'] }}</p>
 
-<p>Mensagem: <span id="msg_back"></span></p>
-<a href="{{url_for('calcular', valor=50)}}"
-    ><button>Calcular valor 50</button></a
->
+<a href="{{url_for('adicionarFilme')}}"><button>Novo filme</button></a>
 <hr />
 {% include 'lista.html' %}
 

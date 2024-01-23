@@ -8,4 +8,4 @@ class Filme(db.Model):
                             default=datetime.utcnow())
     titulo = db.Column(db.String(50), nullable=True)
     ano = db.Column(db.Integer, nullable=True)
-    resumo = db.Column(db.String(500), nullable=True)
+    resumo = db.Column(db.String(1000), nullable=True)
