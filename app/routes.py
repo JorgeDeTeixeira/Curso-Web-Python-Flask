@@ -15,3 +15,12 @@ def homepage():
 def dados():
     dados = {'mensagem': "Dados do bacl-end"}
     return jsonify(dados)
+
+
+@app.route('/calcular/<int:valor>')
+def calcular(valor):
+    context = {
+        'valor': valor,
+        'valorDobrado': valor * 2
+    }
+    return render_template('calcular.html', context=context)

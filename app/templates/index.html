@@ -14,11 +14,15 @@
 <p>Idade: {{ context['idade'] }}</p>
 
 <p>Mensagem: <span id="msg_back"></span></p>
+<a href="{{url_for('calcular', valor=50)}}"
+    ><button>Calcular valor 50</button></a
+>
+<hr />
 {% include 'lista.html' %}
 
 <script>
     const msg_back = document.getElementById("msg_back");
-    fetch("/api/dados")
+    fetch('{{ url_for("dados") }}')
         .then((response) => response.json())
         .then((data) => {
             msg_back.innerHTML = data.mensagem;
