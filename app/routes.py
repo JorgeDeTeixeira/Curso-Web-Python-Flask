@@ -20,15 +20,6 @@ def dados():
     return jsonify(dados)
 
 
-@app.route('/calcular/<int:valor>')
-def calcular(valor):
-    context = {
-        'valor': valor,
-        'valorDobrado': valor * 2
-    }
-    return render_template('calcular.html', context=context)
-
-
 @app.route('/filmes/novo', methods=['GET', 'POST'])
 def adicionarFilme():
     form = FilmeForm()
@@ -68,3 +59,9 @@ def login():
         login_user(user, remember=True)
         return redirect(url_for('homepage'))
     return render_template('login.html', form=form)
+
+
+@app.route('/logout')
+def logout():
+    logout_user()
+    return redirect(url_for('homepage'))
