@@ -1,5 +1,6 @@
-.venv
-.env
-migrations
-local_settings.py
 __pycache__/
+migrations
+.env
+.venv
+*.pyc
+instance
