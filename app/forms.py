@@ -1,7 +1,9 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, TextAreaField, IntegerField, PasswordField
+from wtforms import StringField, SubmitField, TextAreaField, IntegerField, PasswordField, FileField
 from wtforms.validators import DataRequired, ValidationError, Email, EqualTo
-from app import db, bcrypt
+from app import db, bcrypt, app
+from werkzeug.utils import secure_filename
+import os
 
 from app.models import Filme, User, FilmeComentario
 
@@ -10,6 +12,7 @@ class FilmeForm(FlaskForm):
     titulo = StringField('Titulo', validators=[DataRequired()])
     ano = IntegerField('Ano', validators=[DataRequired()])
     resumo = TextAreaField('Resumo', validators=[DataRequired()])
+    imagem = FileField('Imagem', validators=[DataRequired()])
     submit = SubmitField('Salvar')
 
     def validateTitulo(self, titulo):
@@ -17,12 +20,23 @@ class FilmeForm(FlaskForm):
             raise ValidationError('Este filme já foi incluso!')
 
     def save(self):
+        arquivo = self.imagem.data
+        nomeSeguro = secure_filename(arquivo.filename)
+        caminho = os.path.join(
+            os.path.abspath(os.path.dirname(__file__)),
+            app.config['UPLOAD_FOLDER'],
+            'filmes',
+            nomeSeguro
+        )
+
         filme = Filme(
             titulo=self.titulo.data,
             ano=self.ano.data,
-            resumo=self.resumo.data
+            resumo=self.resumo.data,
+            imagem=nomeSeguro
         )
 
+        arquivo.save(caminho)
         db.session.add(filme)
         db.session.commit()
 

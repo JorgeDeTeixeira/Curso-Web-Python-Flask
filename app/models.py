@@ -16,6 +16,7 @@ class Filme(db.Model):
     ano = db.Column(db.Integer, nullable=True)
     resumo = db.Column(db.String(1000), nullable=True)
     comentarios = db.relationship('FilmeComentario', backref='filme', lazy=True)
+    imagem = db.Column(db.String(1000), default='default.png')
 
 
 class User(db.Model, UserMixin):
