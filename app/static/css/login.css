@@ -1,0 +1,41 @@
+/* login.css */
+
+body {
+    background-color: #f8f9fa;
+}
+
+.form-signin {
+    max-width: 330px;
+    padding: 15px;
+    margin: auto;
+}
+
+.form-signin img {
+    width: 100%;
+    max-width: 200px;
+    margin-bottom: 20px;
+}
+
+.form-signin label {
+    margin-bottom: 5px;
+}
+
+.form-signin input {
+    margin-bottom: 20px;
+}
+
+/* Adicionando um estilo para o botão de envio */
+.form-signin button {
+    background-color: #007bff;
+    color: #fff;
+}
+
+/* Adicionando um estilo para o botão de envio quando hover */
+.form-signin button:hover {
+    background-color: #0056b3;
+}
+
+/* Estilo para o rodapé */
+.text-muted {
+    font-size: 14px;
+}
