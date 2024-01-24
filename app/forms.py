@@ -1,9 +1,9 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, TextAreaField, IntegerField
-from wtforms.validators import DataRequired, ValidationError
-from app import db
+from wtforms import StringField, SubmitField, TextAreaField, IntegerField, PasswordField
+from wtforms.validators import DataRequired, ValidationError, Email, EqualTo
+from app import db, bcrypt
 
-from app.models import Filme
+from app.models import Filme, User
 
 
 class FilmeForm(FlaskForm):
@@ -25,3 +25,34 @@ class FilmeForm(FlaskForm):
 
         db.session.add(filme)
         db.session.commit()
+
+
+class UserForm(FlaskForm):
+    email = StringField('E-Mail', validators=[DataRequired(), Email()])
+    username = StringField('Username', validators=[DataRequired()])
+    nome = StringField('Nome', validators=[DataRequired()])
+    sobrenome = StringField('Sobrenome', validators=[DataRequired()])
+    senha = PasswordField('Senha', validators=[DataRequired()])
+    senhaConfirmacao = PasswordField('Confirme a senha', validators=[
+                                     DataRequired(), EqualTo('senha')])
+    submit = SubmitField('Salvar')
+
+    def validateUsername(self, username):
+        if User.query.filter_by(username=username.data).first():
+            raise ValidationError('Username já utilizado, por utilize outro!')
+
+    def save(self):
+        senha = bcrypt.generate_password_hash(self.senha.data)
+        user = User(
+            email=self.email.data,
+            username=self.username.data,
+            nome=self.nome.data,
+            sobrenome=self.sobrenome.data,
+            password=senha
+        )
+        db.session.add(user)
+        db.session.commit()
+
+    def getUser(self):
+        self.save()
+        return User.query.filter_by(username=self.username.data).first()
