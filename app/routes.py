@@ -21,6 +21,7 @@ def dados():
 
 
 @app.route('/filmes/novo', methods=['GET', 'POST'])
+@login_required
 def adicionarFilme():
     form = FilmeForm()
     if form.validate_on_submit():
