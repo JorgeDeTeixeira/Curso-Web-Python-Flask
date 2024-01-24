@@ -54,7 +54,7 @@ def detalheFilme(id):
 def newUser():
     form = UserForm()
     if form.validate_on_submit():
-        user = form.get_user()
+        user = form.getUser()
         login_user(user, remember=True)
         return redirect(url_for('homepage'))
     return render_template('novoUsuario.html', form=form)
