@@ -3,7 +3,7 @@ from wtforms import StringField, SubmitField, TextAreaField, IntegerField, Passw
 from wtforms.validators import DataRequired, ValidationError, Email, EqualTo
 from app import db, bcrypt
 
-from app.models import Filme, User
+from app.models import Filme, User, FilmeComentario
 
 
 class FilmeForm(FlaskForm):
@@ -57,11 +57,12 @@ class UserForm(FlaskForm):
         self.save()
         return User.query.filter_by(username=self.username.data).first()
 
+
 class LoginForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
     senha = PasswordField('Senha', validators=[DataRequired()])
     submit = SubmitField('Login')
-    
+
     def login(self):
         user = User.query.filter_by(username=self.username.data).first()
         if user:
@@ -71,3 +72,18 @@ class LoginForm(FlaskForm):
                 raise Exception('Senha incorreta!')
         else:
             raise Exception("Usuário não encontrado!")
+
+
+class FilmeComentarioForm(FlaskForm):
+    comentario = TextAreaField('Comentário', validators=[DataRequired()])
+    submit = SubmitField('Salvar')
+
+    def save(self, idFilme, idUser):
+        comentario = FilmeComentario(
+            comentario=self.comentario.data,
+            idFilme=idFilme,
+            idUser=idUser
+        )
+
+        db.session.add(comentario)
+        db.session.commit()

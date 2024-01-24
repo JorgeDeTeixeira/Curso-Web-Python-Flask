@@ -15,6 +15,7 @@ class Filme(db.Model):
     titulo = db.Column(db.String(50), nullable=True)
     ano = db.Column(db.Integer, nullable=True)
     resumo = db.Column(db.String(1000), nullable=True)
+    comentarios = db.relationship('FilmeComentario', backref='filme', lazy=True)
 
 
 class User(db.Model, UserMixin):
@@ -24,3 +25,13 @@ class User(db.Model, UserMixin):
     nome = db.Column(db.String(100))
     sobrenome = db.Column(db.String(100))
     password = db.Column(db.String(100))
+    comentariosFilme = db.relationship('FilmeComentario', backref='user', lazy=True)
+
+
+class FilmeComentario(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    dataCriacao = db.Column(db.DateTime, nullable=True,
+                            default=datetime.utcnow())
+    comentario = db.Column(db.String(1000), nullable=True)
+    idFilme = db.Column(db.Integer, db.ForeignKey('filme.id'), nullable=True)
+    idUser = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)

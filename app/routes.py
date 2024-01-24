@@ -1,8 +1,8 @@
 from flask import render_template, url_for, jsonify, redirect
 from app import app
-from app.forms import FilmeForm, UserForm, LoginForm
+from app.forms import FilmeForm, UserForm, LoginForm, FilmeComentarioForm
 from app.models import Filme
-from flask_login import login_required, login_user, logout_user
+from flask_login import current_user, login_required, login_user, logout_user
 
 
 @app.route("/")
@@ -36,10 +36,14 @@ def listarFilmes():
     return render_template('listaFilmes.html', objects=filmes)
 
 
-@app.route('/filmes/<int:id>')
+@app.route('/filmes/<int:id>', methods=['GET', 'POST'])
 def detalheFilme(id):
     filme = Filme.query.get(id)
-    return render_template('detalheFilme.html', object=filme)
+    form = FilmeComentarioForm()
+    if form.validate_on_submit() and current_user.is_authenticated:
+        form.save(filme.id, current_user.id)
+
+    return render_template('detalheFilme.html', object=filme, form=form)
 
 
 @app.route('/novoUsuario', methods=['GET', 'POST'])
